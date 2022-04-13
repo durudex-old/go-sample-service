@@ -54,8 +54,6 @@ func NewServer(cfg *config.ServerConfig, handler *grpc.Handler) (*Server, error)
 
 // Running server.
 func (s *Server) Run() {
-	defer log.Info().Msg("Server stopped!")
-
 	log.Debug().Msg("Register gRPC handlers...")
 
 	// Register gRPC handlers.
