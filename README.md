@@ -43,7 +43,7 @@ Use `make lint` to run the lint, and use `make test` for tests.
 
 ## 👍 Contribute
 If you want to say thank you and/or support the active development of [Durudex](https://github.com/durudex):
-1) Add a [GitHub Star](https://github.com/durudex/durudex-user-service/stargazers) to the project.
+1) Add a [GitHub Star](https://github.com/durudex/go-sample-service/stargazers) to the project.
 2) Join the [Discord Server](https://discord.gg/4qcXbeVehZ).
 
 ## ⚠️ License
