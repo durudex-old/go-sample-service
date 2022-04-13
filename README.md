@@ -31,6 +31,9 @@ sample.service.durudex.local
 ```
 2) Create an `.env` file in the root directory and add the following values from `.env.example`:
 ```env
+# Debug mode.
+DEBUG=true
+
 # Config variables:
 CONFIG_PATH=configs/main
 ```

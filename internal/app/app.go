@@ -27,11 +27,19 @@ import (
 	"github.com/durudex/go-sample-service/internal/server"
 	"github.com/durudex/go-sample-service/internal/service"
 
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
 
 // A function that running the application.
 func Run() {
+	// Set logger mode.
+	if os.Getenv("DEBUG") == "true" {
+		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	} else {
+		zerolog.SetGlobalLevel(zerolog.InfoLevel)
+	}
+
 	// Initialize config.
 	cfg, err := config.Init()
 	if err != nil {
