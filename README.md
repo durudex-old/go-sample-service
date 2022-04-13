@@ -2,14 +2,14 @@
     <a href="https://discord.gg/4qcXbeVehZ">
         <img alt="Discord" src="https://img.shields.io/discord/882288646517035028?label=%F0%9F%92%AC%20discord">
     </a>
-    <a href="https://github.com/durudex/durudex-sample-service/blob/main/COPYING">
-        <img alt="License" src="https://img.shields.io/github/license/durudex/durudex-sample-service?label=%F0%9F%93%95%20license">
+    <a href="https://github.com/durudex/go-sample-service/blob/main/COPYING">
+        <img alt="License" src="https://img.shields.io/github/license/durudex/go-sample-service?label=%F0%9F%93%95%20license">
     </a>
-    <a href="https://github.com/durudex/durudex-sample-service/stargazers">
-        <img alt="GitHub Stars" src="https://img.shields.io/github/stars/durudex/durudex-sample-service?label=%E2%AD%90%20stars&logo=sdf">
+    <a href="https://github.com/durudex/go-sample-service/stargazers">
+        <img alt="GitHub Stars" src="https://img.shields.io/github/stars/durudex/go-sample-service?label=%E2%AD%90%20stars&logo=sdf">
     </a>
-    <a href="https://github.com/durudex/durudex-sample-service/network">
-        <img alt="GitHub Forks" src="https://img.shields.io/github/forks/durudex/durudex-sample-service?label=%F0%9F%93%81%20forks">
+    <a href="https://github.com/durudex/go-sample-service/network">
+        <img alt="GitHub Forks" src="https://img.shields.io/github/forks/durudex/go-sample-service?label=%F0%9F%93%81%20forks">
     </a>
 </div>
 
