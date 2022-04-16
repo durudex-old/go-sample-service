@@ -27,13 +27,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-// Certificates paths.
-const (
-	CACertFile      = "certs/rootCA.pem"
-	serviceCertFile = "certs/sample.service-cert.pem"
-	serviceCertKey  = "certs/sample.service-key.pem"
-)
-
 // gRPC server structure.
 type gRPCServer struct{ Server *grpc.Server }
 
