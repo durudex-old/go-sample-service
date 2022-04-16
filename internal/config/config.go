@@ -33,9 +33,17 @@ type (
 
 	// Server config variables.
 	ServerConfig struct {
-		Host string `mapstructure:"host"`
-		Port string `mapstructure:"port"`
-		TLS  bool   `mapstructure:"tls"`
+		Host string    `mapstructure:"host"`
+		Port string    `mapstructure:"port"`
+		TLS  TLSConfig `mapstructure:"tls"`
+	}
+
+	// TLS config variables.
+	TLSConfig struct {
+		Enable bool   `mapstructure:"enable"`
+		CACert string `mapstructure:"ca-cert"`
+		Cert   string `mapstructure:"cert"`
+		Key    string `mapstructure:"key"`
 	}
 )
 
@@ -98,5 +106,10 @@ func populateDefaults() {
 	// Server defaults.
 	viper.SetDefault("server.host", defaultServerHost)
 	viper.SetDefault("server.port", defaultServerPort)
-	viper.SetDefault("server.tls", defaultServerTLS)
+
+	// TLS server defaults.
+	viper.SetDefault("server.tls.enable", defaultTLSEnable)
+	viper.SetDefault("server.tls.ca-cert", defaultTLSCACert)
+	viper.SetDefault("server.tls.cert", defaultTLSCert)
+	viper.SetDefault("server.tls.key", defaultTLSKey)
 }

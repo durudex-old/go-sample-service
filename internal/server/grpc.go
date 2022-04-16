@@ -38,11 +38,11 @@ const (
 type gRPCServer struct{ Server *grpc.Server }
 
 // Creating a new grpc server.
-func NewGRPC(cfg *config.ServerConfig) (*gRPCServer, error) {
+func NewGRPC(cfg *config.TLSConfig) (*gRPCServer, error) {
 	serverOptions := []grpc.ServerOption{}
 
-	if cfg.TLS {
-		creds, err := tls.LoadTLSCredentials(CACertFile, serviceCertFile, serviceCertKey)
+	if cfg.Enable {
+		creds, err := tls.LoadTLSCredentials(cfg.CACert, cfg.Cert, cfg.Key)
 		if err != nil {
 			return nil, err
 		}

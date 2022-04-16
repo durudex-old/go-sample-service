@@ -24,5 +24,10 @@ const (
 	// Server defaults.
 	defaultServerHost string = "sample.service.durudex.local"
 	defaultServerPort string = "8000"
-	defaultServerTLS  bool   = true
+
+	// TLS server defaults.
+	defaultTLSEnable bool   = true
+	defaultTLSCACert string = "./certs/rootCA.pem"
+	defaultTLSCert   string = "./certs/sample.service.durudex.local-cert.pem"
+	defaultTLSKey    string = "./certs/sample.service.durudex.local-key.pem"
 )
