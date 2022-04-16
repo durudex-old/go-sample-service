@@ -25,11 +25,7 @@ Durudex Go sample service.
 + [golangci-lint](https://golangci-lint.run/usage/install/)
 
 ## ⚙️ Build & Run
-1) Add local domains:
-```sh
-sample.service.durudex.local
-```
-2) Create an `.env` file in the root directory and add the following values from `.env.example`:
+1) Create an `.env` file in the root directory and add the following values from `.env.example`:
 ```env
 # Debug mode.
 DEBUG=true
@@ -37,7 +33,7 @@ DEBUG=true
 # Config variables:
 CONFIG_PATH=configs/main
 ```
-3) Generate certificates, information can be found at [certs/README.md](certs/README.md)
+2) Generate certificates, information can be found at [certs/README.md](certs/README.md)
 
 Use `make run` to run and `make build` to build project.
 
