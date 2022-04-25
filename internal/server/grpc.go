@@ -34,18 +34,17 @@ type gRPCServer struct{ Server *grpc.Server }
 func NewGRPC(cfg *config.TLSConfig) (*gRPCServer, error) {
 	serverOptions := []grpc.ServerOption{}
 
+	// Added basic server options.
+	serverOptions = append(serverOptions, grpc.UnaryInterceptor(unaryInterceptor))
+
 	if cfg.Enable {
 		creds, err := tls.LoadTLSCredentials(cfg.CACert, cfg.Cert, cfg.Key)
 		if err != nil {
 			return nil, err
 		}
 
-		// Append server options.
-		serverOptions = append(
-			serverOptions,
-			grpc.Creds(creds),
-			grpc.UnaryInterceptor(unaryInterceptor),
-		)
+		// Append server credential options.
+		serverOptions = append(serverOptions, grpc.Creds(creds))
 	}
 
 	return &gRPCServer{Server: grpc.NewServer(serverOptions...)}, nil
