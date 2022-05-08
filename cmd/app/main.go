@@ -17,10 +17,60 @@
 
 package main
 
-import "github.com/durudex/go-sample-service/internal/app"
+import (
+	"os"
+	"os/signal"
+	"syscall"
 
-// The main function that is called when running the application.
+	"github.com/durudex/go-sample-service/internal/config"
+	"github.com/durudex/go-sample-service/internal/delivery/grpc"
+	"github.com/durudex/go-sample-service/internal/repository"
+	"github.com/durudex/go-sample-service/internal/server"
+	"github.com/durudex/go-sample-service/internal/service"
+
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
+)
+
+// Initialize application.
+func init() {
+	// Set logger mode.
+	if os.Getenv("DEBUG") == "true" {
+		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	} else {
+		zerolog.SetGlobalLevel(zerolog.InfoLevel)
+	}
+}
+
+// A function that running the application.
 func main() {
-	// Running a this application.
-	app.Run()
+	// Initialize config.
+	cfg, err := config.Init()
+	if err != nil {
+		log.Error().Err(err).Msg("error initialize config")
+	}
+
+	// Creating a service and gRPC handler.
+	repos := repository.NewRepository(cfg)
+	service := service.NewService(repos)
+	handler := grpc.NewHandler(service)
+
+	// Create a new server.
+	srv, err := server.NewServer(&cfg.Server, handler)
+	if err != nil {
+		log.Fatal().Err(err).Msg("error creating a new server")
+	}
+
+	// Run server.
+	go srv.Run()
+
+	// Quit in application.
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	// Stoping server.
+	srv.Stop()
+
+	log.Info().Msg("Durudex Sample Service stoping!")
 }

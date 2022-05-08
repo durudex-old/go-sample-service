@@ -17,8 +17,12 @@
 
 package service
 
+import "github.com/durudex/go-sample-service/internal/repository"
+
 // Service structure.
-type Service struct{}
+type Service struct{ Sample }
 
 // Creating a new service.
-func NewService() *Service { return &Service{} }
+func NewService(repos *repository.Repository) *Service {
+	return &Service{Sample: NewSampleService(repos.Postgres)}
+}
