@@ -17,11 +17,18 @@
 
 package postgres
 
-import "context"
+import (
+	"context"
+	"fmt"
+)
+
+// User table name.
+const UserTable string = "user"
 
 // Sample repository interface.
 type Sample interface {
-	Create(ctx context.Context, text string) error
+	Create(ctx context.Context, text string) (int, error)
+	Delete(ctx context.Context, id int) error
 }
 
 // Sample repository structure.
@@ -32,7 +39,27 @@ func NewSampleRepository(psql Postgres) *SampleRepository {
 	return &SampleRepository{psql: psql}
 }
 
-// Create sample element.
-func (r *SampleRepository) Create(ctx context.Context, text string) error {
-	return nil
+// Create sample element in postgres database.
+func (r *SampleRepository) Create(ctx context.Context, text string) (int, error) {
+	var id int
+
+	query := fmt.Sprintf(`INSERT INTO "%s" (text) VALUES ($1) RETURNING "id"`, UserTable)
+
+	// Execute query.
+	err := r.psql.QueryRow(ctx, query, text).Scan(&id)
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
+}
+
+// Delete sample element in postgres database.
+func (r *SampleRepository) Delete(ctx context.Context, id int) error {
+	query := fmt.Sprintf(`DELETE FROM "%s" WHERE "id"=$1`, UserTable)
+
+	// Execute query.
+	_, err := r.psql.Exec(ctx, query, id)
+
+	return err
 }
