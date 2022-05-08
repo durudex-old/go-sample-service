@@ -28,7 +28,8 @@ import (
 type (
 	// Config variables.
 	Config struct {
-		Server ServerConfig // Server configuration.
+		Server   ServerConfig   // Server configuration.
+		Postgres PostgresConfig // Postgres configuration.
 	}
 
 	// Server config variables.
@@ -45,6 +46,9 @@ type (
 		Cert   string `mapstructure:"cert"`
 		Key    string `mapstructure:"key"`
 	}
+
+	// Postgres config variables.
+	PostgresConfig struct{ URL string }
 )
 
 // Initialize config.
