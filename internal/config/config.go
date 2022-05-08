@@ -25,11 +25,14 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Default config path.
+const defaultConfigPath string = "configs/main"
+
 type (
 	// Config variables.
 	Config struct {
-		Server   ServerConfig   // Server configuration.
-		Postgres PostgresConfig // Postgres configuration.
+		Server   ServerConfig
+		Database DatabaseConfig
 	}
 
 	// Server config variables.
@@ -47,16 +50,22 @@ type (
 		Key    string `mapstructure:"key"`
 	}
 
+	// Database config variables.
+	DatabaseConfig struct {
+		Postgres PostgresConfig `mapstructure:"postgres"`
+	}
+
 	// Postgres config variables.
-	PostgresConfig struct{ URL string }
+	PostgresConfig struct {
+		MaxConns int32 `mapstructure:"max-conns"`
+		MinConns int32 `mapstructure:"min-conns"`
+		URL      string
+	}
 )
 
 // Initialize config.
 func Init() (*Config, error) {
 	log.Debug().Msg("Initialize config...")
-
-	// Populate defaults config variables.
-	populateDefaults()
 
 	// Parsing specified when starting the config file.
 	if err := parseConfigFile(); err != nil {
@@ -69,6 +78,9 @@ func Init() (*Config, error) {
 	if err := unmarshal(&cfg); err != nil {
 		return nil, err
 	}
+
+	// Set configurations from environment.
+	setFromEnv(&cfg)
 
 	return &cfg, nil
 }
@@ -99,21 +111,19 @@ func parseConfigFile() error {
 func unmarshal(cfg *Config) error {
 	log.Debug().Msg("Unmarshal config keys...")
 
+	// Unmarshal database keys.
+	if err := viper.UnmarshalKey("database", &cfg.Database); err != nil {
+		return err
+	}
+
 	// Unmarshal server keys.
 	return viper.UnmarshalKey("server", &cfg.Server)
 }
 
-// Populate defaults config variables.
-func populateDefaults() {
-	log.Debug().Msg("Populate defaults config variables...")
+// Set configurations from environment.
+func setFromEnv(cfg *Config) {
+	log.Debug().Msg("Set configurations from environment.")
 
-	// Server defaults.
-	viper.SetDefault("server.host", defaultServerHost)
-	viper.SetDefault("server.port", defaultServerPort)
-
-	// TLS server defaults.
-	viper.SetDefault("server.tls.enable", defaultTLSEnable)
-	viper.SetDefault("server.tls.ca-cert", defaultTLSCACert)
-	viper.SetDefault("server.tls.cert", defaultTLSCert)
-	viper.SetDefault("server.tls.key", defaultTLSKey)
+	// Postgres configurations.
+	cfg.Database.Postgres.URL = os.Getenv("POSTGRES_URL")
 }

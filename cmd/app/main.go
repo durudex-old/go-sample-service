@@ -51,7 +51,7 @@ func main() {
 	}
 
 	// Creating a service and gRPC handler.
-	repos := repository.NewRepository(cfg)
+	repos := repository.NewRepository(cfg.Database)
 	service := service.NewService(repos)
 	handler := grpc.NewHandler(service)
 

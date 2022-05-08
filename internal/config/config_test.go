@@ -15,18 +15,20 @@
  * along with Durudex. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package config
+package config_test
 
 import (
 	"os"
 	"reflect"
 	"testing"
+
+	"github.com/durudex/go-sample-service/internal/config"
 )
 
 // Test initialize config.
 func TestConfig_Init(t *testing.T) {
 	// Environment configurations.
-	type env struct{ configPath string }
+	type env struct{ configPath, postgresUrl string }
 
 	// Testing args.
 	type args struct{ env env }
@@ -34,27 +36,38 @@ func TestConfig_Init(t *testing.T) {
 	// Set environments configurations.
 	setEnv := func(env env) {
 		os.Setenv("CONFIG_PATH", env.configPath)
+		os.Setenv("POSTGRES_URL", env.postgresUrl)
 	}
 
 	// Tests structures.
 	tests := []struct {
 		name    string
 		args    args
-		want    *Config
+		want    *config.Config
 		wantErr bool
 	}{
 		{
 			name: "OK",
-			args: args{env: env{configPath: "fixtures/main"}},
-			want: &Config{
-				Server: ServerConfig{
-					Host: defaultServerHost,
-					Port: defaultServerPort,
-					TLS: TLSConfig{
-						Enable: defaultTLSEnable,
-						CACert: defaultTLSCACert,
-						Cert:   defaultTLSCert,
-						Key:    defaultTLSKey,
+			args: args{env: env{
+				configPath:  "fixtures/main",
+				postgresUrl: "postgres://localhost:1",
+			}},
+			want: &config.Config{
+				Server: config.ServerConfig{
+					Host: "sample.service.durudex.local",
+					Port: "8000",
+					TLS: config.TLSConfig{
+						Enable: true,
+						CACert: "./certs/rootCA.pem",
+						Cert:   "./certs/sample.service.durudex.local-cert.pem",
+						Key:    "./certs/sample.service.durudex.local-key.pem",
+					},
+				},
+				Database: config.DatabaseConfig{
+					Postgres: config.PostgresConfig{
+						MaxConns: 20,
+						MinConns: 5,
+						URL:      "postgres://localhost:1",
 					},
 				},
 			},
@@ -68,7 +81,7 @@ func TestConfig_Init(t *testing.T) {
 			setEnv(tt.args.env)
 
 			// Initialize connfig.
-			got, err := Init()
+			got, err := config.Init()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("error initialize config: %s", err.Error())
 			}

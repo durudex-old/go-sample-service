@@ -26,6 +26,6 @@ import (
 type Repository struct{ Postgres *postgres.PostgresRepository }
 
 // Creating a new repository.
-func NewRepository(config *config.Config) *Repository {
+func NewRepository(config config.DatabaseConfig) *Repository {
 	return &Repository{Postgres: postgres.NewPostgresRepository(config.Postgres)}
 }
