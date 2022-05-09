@@ -34,7 +34,9 @@ type Server struct {
 
 // Creating a new gRPC server.
 func NewServer(cfg config.ServerConfig) *Server {
-	return &Server{server: grpc.NewServer(getOptions(cfg.TLS)), config: cfg}
+	options := getOptions(cfg.TLS)
+
+	return &Server{server: grpc.NewServer(options...), config: cfg}
 }
 
 // Running gRPC server.
