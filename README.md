@@ -21,17 +21,19 @@ Durudex Go sample service.
 
 ### 💡 Prerequisites
 + [Go 1.18](https://golang.org/)
-+ [grpc](https://grpc.io/docs/languages/go/quickstart/)
-+ [golangci-lint](https://golangci-lint.run/usage/install/)
++ [Docker](https://www.docker.com/get-started/)
 
 ## ⚙️ Build & Run
 1) Create an `.env` file in the root directory and add the following values from `.env.example`:
 ```env
 # Debug mode.
-DEBUG=true
+DEBUG=false
 
 # Config variables:
 CONFIG_PATH=configs/main
+
+# Postgres database variables:
+POSTGRES_URL=postgresql://admin:qwerty@sample.postgres.durudex.local:5432/durudex
 ```
 2) Generate certificates, information can be found at [certs/README.md](certs/README.md)
 

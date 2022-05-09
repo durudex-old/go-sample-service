@@ -33,8 +33,31 @@ services:
       - .env
     networks:
       - durudex-backend
+      - durudex-database
+
+  postgres:
+    image: postgres:latest
+    container_name: sample-postgres
+    environment:
+      POSTGRES_DB: durudex
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: qwerty
+    hostname: sample.postgres.durudex.local
+    ports:
+      - 5432:5432
+    volumes:
+      - durudex:/var/lib/postgresql/data
+    networks:
+      - durudex-database
+
+volumes:
+  durudex:
+    name: durudex
 
 networks:
   durudex-backend:
     driver: bridge
     name: durudex-backend
+  durudex-database:
+    driver: bridge
+    name: durudex-database
