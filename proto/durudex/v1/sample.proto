@@ -1,0 +1,41 @@
+/*
+ * Copyright © 2022 Durudex
+
+ * This file is part of Durudex: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+
+ * Durudex is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+
+ * You should have received a copy of the GNU Affero General Public License
+ * along with Durudex. If not, see <https://www.gnu.org/licenses/>.
+ */
+
+syntax = "proto3";
+
+package durudex.v1;
+
+option go_package = "github.com/durudex/go-sample-service/pkg/pb/v1;v1";
+
+service SampleService {
+  rpc CreateElement(CreateElementRequest) returns (CreateElementResponse);
+  rpc DeleteElement(DeleteElementRequest) returns (DeleteElementResponse);
+}
+
+message CreateElementRequest {
+  string text = 1;
+}
+
+message CreateElementResponse {
+  int64 id = 1;
+}
+
+message DeleteElementRequest {
+  int64 id = 1;
+}
+
+message DeleteElementResponse {}
