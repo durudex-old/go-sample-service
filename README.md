@@ -20,7 +20,7 @@ Durudex Go sample service.
 </p>
 
 ### 💡 Prerequisites
-+ [Go 1.17](https://golang.org/)
++ [Go 1.18](https://golang.org/)
 + [grpc](https://grpc.io/docs/languages/go/quickstart/)
 + [golangci-lint](https://golangci-lint.run/usage/install/)
 
@@ -47,9 +47,3 @@ If you want to say thank you and/or support the active development of [Durudex](
 
 ## ⚠️ License
 Copyright © 2022 [Durudex](https://github.com/durudex). Released under the [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.html) license.
-
-#### Third-party library licenses
-+ [grpc-go](https://github.com/grpc/grpc-go/blob/master/LICENSE)
-+ [protobuf](https://github.com/protocolbuffers/protobuf/blob/master/LICENSE)
-+ [zerolog](https://github.com/rs/zerolog/blob/master/LICENSE)
-+ [viper](https://github.com/spf13/viper/blob/master/LICENSE)
