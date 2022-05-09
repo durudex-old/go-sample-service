@@ -53,7 +53,7 @@ func TestConfig_Init(t *testing.T) {
 				postgresUrl: "postgres://localhost:1",
 			}},
 			want: &config.Config{
-				Server: config.ServerConfig{
+				GRPC: config.GRPCConfig{
 					Host: "sample.service.durudex.local",
 					Port: "8000",
 					TLS: config.TLSConfig{

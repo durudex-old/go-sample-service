@@ -29,12 +29,12 @@ import (
 // gRPC server structure.
 type Server struct {
 	server  *grpc.Server
-	config  config.ServerConfig
+	config  config.GRPCConfig
 	handler *Handler
 }
 
 // Creating a new gRPC server.
-func NewServer(cfg config.ServerConfig, handler *Handler) *Server {
+func NewServer(cfg config.GRPCConfig, handler *Handler) *Server {
 	options := getOptions(cfg.TLS)
 
 	return &Server{

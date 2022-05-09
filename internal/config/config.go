@@ -31,12 +31,12 @@ const defaultConfigPath string = "configs/main"
 type (
 	// Config variables.
 	Config struct {
-		Server   ServerConfig
+		GRPC     GRPCConfig
 		Database DatabaseConfig
 	}
 
-	// Server config variables.
-	ServerConfig struct {
+	// gRPC server config variables.
+	GRPCConfig struct {
 		Host string    `mapstructure:"host"`
 		Port string    `mapstructure:"port"`
 		TLS  TLSConfig `mapstructure:"tls"`
@@ -116,8 +116,8 @@ func unmarshal(cfg *Config) error {
 		return err
 	}
 
-	// Unmarshal server keys.
-	return viper.UnmarshalKey("server", &cfg.Server)
+	// Unmarshal gRPC server keys.
+	return viper.UnmarshalKey("grpc", &cfg.GRPC)
 }
 
 // Set configurations from environment.

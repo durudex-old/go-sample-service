@@ -55,7 +55,7 @@ func main() {
 	handler := grpc.NewHandler(service)
 
 	// Create a new server.
-	srv := grpc.NewServer(cfg.Server, handler)
+	srv := grpc.NewServer(cfg.GRPC, handler)
 
 	// Run server.
 	go srv.Run()
