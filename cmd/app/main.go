@@ -23,10 +23,9 @@ import (
 	"syscall"
 
 	"github.com/durudex/go-sample-service/internal/config"
-	"github.com/durudex/go-sample-service/internal/delivery/grpc"
 	"github.com/durudex/go-sample-service/internal/repository"
-	"github.com/durudex/go-sample-service/internal/server"
 	"github.com/durudex/go-sample-service/internal/service"
+	"github.com/durudex/go-sample-service/internal/transport/grpc"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -50,16 +49,12 @@ func main() {
 		log.Error().Err(err).Msg("error initialize config")
 	}
 
-	// Creating a service and gRPC handler.
+	// Repository, Service, Handlers.
 	repos := repository.NewRepository(cfg.Database)
-	service := service.NewService(repos)
-	handler := grpc.NewHandler(service)
+	_ = service.NewService(repos)
 
 	// Create a new server.
-	srv, err := server.NewServer(&cfg.Server, handler)
-	if err != nil {
-		log.Fatal().Err(err).Msg("error creating a new server")
-	}
+	srv := grpc.NewServer(cfg.Server)
 
 	// Run server.
 	go srv.Run()
