@@ -23,7 +23,7 @@ import (
 )
 
 // User table name.
-const UserTable string = "user"
+const UserTable string = "sample"
 
 // Sample repository interface.
 type Sample interface {

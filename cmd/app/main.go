@@ -49,9 +49,11 @@ func main() {
 		log.Error().Err(err).Msg("error initialize config")
 	}
 
-	// Repository, Service, Handlers.
+	// Creating a new repository.
 	repos := repository.NewRepository(cfg.Database)
+	// Creating a new service.
 	service := service.NewService(repos)
+	// Creating a new gRPC handler.
 	handler := grpc.NewHandler(service)
 
 	// Create a new server.

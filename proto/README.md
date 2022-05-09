@@ -1,1 +1,1 @@
-# Durudex Protocol Buffers
+# Durudex Sample Service Protocol Buffers
