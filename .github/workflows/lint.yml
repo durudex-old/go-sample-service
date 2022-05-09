@@ -37,12 +37,12 @@ jobs:
 
   pb-lint:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./proto
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+
+      - name: Change Directory
+        uses: cd proto
 
       - name: Install Protobuf Lint
         uses: bufbuild/buf-setup-action@v1
