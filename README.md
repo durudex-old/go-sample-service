@@ -35,7 +35,8 @@ CONFIG_PATH=configs/main
 # Postgres database variables:
 POSTGRES_URL=postgresql://admin:qwerty@sample.postgres.durudex.local:5432/durudex
 ```
-2) Generate certificates, information can be found at [certs/README.md](certs/README.md)
+2) Generate certificates, information can be found at [certs/README.md](certs/README.md).
+3) Migrate the database, information can be found at [schema/README.md](schema/README.md).
 
 Use `make run` to run and `make build` to build project.
 

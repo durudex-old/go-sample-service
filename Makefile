@@ -51,4 +51,8 @@ migrate-down:
 buf:
 	buf generate -o pkg/pb proto/durudex
 
+.PHONY: buf-lint
+buf-lint:
+	buf lint proto
+
 .DEFAULT_GOAL := run
