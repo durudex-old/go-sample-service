@@ -28,15 +28,20 @@ import (
 
 // gRPC server structure.
 type Server struct {
-	server *grpc.Server
-	config config.ServerConfig
+	server  *grpc.Server
+	config  config.ServerConfig
+	handler *Handler
 }
 
 // Creating a new gRPC server.
-func NewServer(cfg config.ServerConfig) *Server {
+func NewServer(cfg config.ServerConfig, handler *Handler) *Server {
 	options := getOptions(cfg.TLS)
 
-	return &Server{server: grpc.NewServer(options...), config: cfg}
+	return &Server{
+		server:  grpc.NewServer(options...),
+		config:  cfg,
+		handler: handler,
+	}
 }
 
 // Running gRPC server.
@@ -50,6 +55,9 @@ func (s *Server) Run() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("error creating tcp listener")
 	}
+
+	// Registering gRPC handlers.
+	s.handler.RegisterHandlers(s.server)
 
 	// Running gRPC server.
 	if err := s.server.Serve(lis); err != nil {

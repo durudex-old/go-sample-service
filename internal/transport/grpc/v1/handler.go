@@ -15,7 +15,7 @@
  * along with Durudex. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package handler
+package v1
 
 import (
 	"github.com/durudex/go-sample-service/internal/service"

@@ -51,10 +51,11 @@ func main() {
 
 	// Repository, Service, Handlers.
 	repos := repository.NewRepository(cfg.Database)
-	_ = service.NewService(repos)
+	service := service.NewService(repos)
+	handler := grpc.NewHandler(service)
 
 	// Create a new server.
-	srv := grpc.NewServer(cfg.Server)
+	srv := grpc.NewServer(cfg.Server, handler)
 
 	// Run server.
 	go srv.Run()
