@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Durudex. If not, see <https://www.gnu.org/licenses/>.
 
+POSTGRES_URL=postgresql://admin:qwerty@sample.postgres.durudex.local:5432/durudex
+
 .PHONY: download
 download:
 	go mod download
@@ -32,6 +34,18 @@ lint:
 .PHONY: test
 test: lint
 	go test -v ./...
+
+.PHONY: migrate-create
+migrate-create:
+	migrate create -ext sql -dir ./schema -seq durudex
+
+.PHONY: migrate-up
+migrate-up:
+	migrate -path ./schema -database '$(POSTGRES_URL)?sslmode=disable' up
+
+.PHONY: migrate-down
+migrate-down:
+	migrate -path ./schema -database '$(POSTGRES_URL)?sslmode=disable' down
 
 .PHONY: buf
 buf:
