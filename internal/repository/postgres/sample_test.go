@@ -59,7 +59,7 @@ func TestSampleRepository_Create(t *testing.T) {
 			args: args{text: "test message"},
 			want: 1,
 			mockBehavior: func(args args, id int) {
-				query := fmt.Sprintf(`INSERT INTO "%s"`, postgres.UserTable)
+				query := fmt.Sprintf(`INSERT INTO "%s"`, postgres.SampleTable)
 				mock.ExpectQuery(query).
 					WithArgs(args.text).
 					WillReturnRows(mock.NewRows([]string{"id"}).AddRow(id))
@@ -115,7 +115,7 @@ func TestSampleRepository_Delete(t *testing.T) {
 			name: "OK",
 			args: args{id: 1},
 			mockBehavior: func(args args) {
-				query := fmt.Sprintf(`DELETE FROM "%s"`, postgres.UserTable)
+				query := fmt.Sprintf(`DELETE FROM "%s"`, postgres.SampleTable)
 				mock.ExpectExec(query).
 					WithArgs(args.id).
 					WillReturnResult(pgxmock.NewResult("", 1))

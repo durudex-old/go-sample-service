@@ -45,12 +45,15 @@ func (h *SampleHandler) CreateElement(ctx context.Context, input *v1.CreateEleme
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	return &v1.CreateElementResponse{Id: int64(id)}, err
+	return &v1.CreateElementResponse{Id: int64(id)}, nil
 }
 
 // Deleting a sample element.
 func (h *SampleHandler) DeleteElement(ctx context.Context, input *v1.DeleteElementRequest) (*v1.DeleteElementResponse, error) {
 	err := h.service.Delete(ctx, int(input.Id))
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
 
-	return &v1.DeleteElementResponse{}, err
+	return &v1.DeleteElementResponse{}, nil
 }

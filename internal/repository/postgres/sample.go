@@ -22,8 +22,8 @@ import (
 	"fmt"
 )
 
-// User table name.
-const UserTable string = "sample"
+// Sample table name.
+const SampleTable string = "sample"
 
 // Sample repository interface.
 type Sample interface {
@@ -43,7 +43,7 @@ func NewSampleRepository(psql Postgres) *SampleRepository {
 func (r *SampleRepository) Create(ctx context.Context, text string) (int, error) {
 	var id int
 
-	query := fmt.Sprintf(`INSERT INTO "%s" (text) VALUES ($1) RETURNING "id"`, UserTable)
+	query := fmt.Sprintf(`INSERT INTO "%s" (text) VALUES ($1) RETURNING "id"`, SampleTable)
 
 	// Execute query.
 	err := r.psql.QueryRow(ctx, query, text).Scan(&id)
@@ -56,7 +56,7 @@ func (r *SampleRepository) Create(ctx context.Context, text string) (int, error)
 
 // Delete sample element in postgres database.
 func (r *SampleRepository) Delete(ctx context.Context, id int) error {
-	query := fmt.Sprintf(`DELETE FROM "%s" WHERE "id"=$1`, UserTable)
+	query := fmt.Sprintf(`DELETE FROM "%s" WHERE "id"=$1`, SampleTable)
 
 	// Execute query.
 	_, err := r.psql.Exec(ctx, query, id)
