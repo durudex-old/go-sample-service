@@ -1,12 +1,12 @@
 # Certificates
 
-You need to configure the tls configuration:
+You need to move your certificates to this directory, and make configuration changes:
 ```yml
 grpc:
   tls:
-    ca-cert: "path to cert ca"
-    cert: "path to cert"
-    key: "path to cert key"
+    ca-cert: "./certs/you-ca-cert.pem"
+    cert: "./certs/you-cert.pem"
+    key: "./certs/you-key.pem"
 ```
 
 **If you do not want to use tls connection change**:
