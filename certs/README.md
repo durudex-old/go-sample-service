@@ -1,10 +1,17 @@
 # Certificates
 
-You need to generate certificates for this program to work. How to do it you can find here - [click](https://github.com/durudex/durudex-gateway/blob/main/certs/README.md).
-
-**If you do not want to use tls connection change [configs/main](https://github.com/durudex/durudex-sample-service/blob/main/configs/main.yml)**:
+You need to configure the tls configuration:
 ```yml
 grpc:
-    tls:
-        enable: false
+  tls:
+    ca-cert: "path to cert ca"
+    cert: "path to cert"
+    key: "path to cert key"
+```
+
+**If you do not want to use tls connection change**:
+```yml
+grpc:
+  tls:
+    enable: false
 ```
