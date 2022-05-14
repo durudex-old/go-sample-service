@@ -133,5 +133,5 @@ var SampleService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "v1/sample.proto",
+	Metadata: "durudex/v1/sample.proto",
 }

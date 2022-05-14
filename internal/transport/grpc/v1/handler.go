@@ -19,7 +19,7 @@ package v1
 
 import (
 	"github.com/durudex/go-sample-service/internal/service"
-	v1 "github.com/durudex/go-sample-service/pkg/pb/v1"
+	v1 "github.com/durudex/go-sample-service/pkg/pb/durudex/v1"
 
 	"google.golang.org/grpc"
 )

@@ -18,23 +18,11 @@
 package postgres
 
 import (
-	"context"
-
 	"github.com/durudex/go-sample-service/internal/config"
+	"github.com/durudex/go-sample-service/pkg/database/postgres"
 
-	"github.com/jackc/pgconn"
-	"github.com/jackc/pgx/v4"
-	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/rs/zerolog/log"
 )
-
-// Postgres driver interface.
-type Postgres interface {
-	Begin(ctx context.Context) (pgx.Tx, error)
-	Query(ctx context.Context, sql string, args ...interface{}) (pgx.Rows, error)
-	QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row
-	Exec(ctx context.Context, sql string, arguments ...interface{}) (pgconn.CommandTag, error)
-}
 
 // Postgres repository structure.
 type PostgresRepository struct{ Sample }
@@ -44,34 +32,14 @@ func NewPostgresRepository(cfg config.PostgresConfig) *PostgresRepository {
 	log.Debug().Msg("Creating a new postgres repository")
 
 	// Creating a new postgres client.
-	client, err := NewClient(cfg)
+	client, err := postgres.NewClient(&postgres.PostgresConfig{
+		URL:      cfg.URL,
+		MaxConns: cfg.MaxConns,
+		MinConns: cfg.MinConns,
+	})
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed to create postgres client")
 	}
 
 	return &PostgresRepository{Sample: NewSampleRepository(client)}
-}
-
-// Creating a new postgres client.
-func NewClient(cfg config.PostgresConfig) (Postgres, error) {
-	log.Debug().Msg("Creating a new postgres client")
-
-	// Parsing database url.
-	config, err := pgxpool.ParseConfig(cfg.URL)
-	if err != nil {
-		return nil, err
-	}
-
-	// Create a new pool connections by config.
-	pool, err := pgxpool.ConnectConfig(context.Background(), config)
-	if err != nil {
-		return nil, err
-	}
-
-	// Ping a database connection.
-	if err := pool.Ping(context.Background()); err != nil {
-		return nil, err
-	}
-
-	return pool, nil
 }

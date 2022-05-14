@@ -49,7 +49,7 @@ migrate-down:
 
 .PHONY: buf
 buf:
-	buf generate -o pkg/pb proto/durudex
+	buf generate proto
 
 .PHONY: buf-lint
 buf-lint:

@@ -20,8 +20,8 @@ managed:
 
 plugins:
   - name: "go"
-    out: "."
+    out: "pkg/pb"
     opt: "paths=source_relative"
   - name: "go-grpc"
-    out: "."
+    out: "pkg/pb"
     opt: "paths=source_relative"

@@ -20,6 +20,8 @@ package postgres
 import (
 	"context"
 	"fmt"
+
+	"github.com/durudex/go-sample-service/pkg/database/postgres"
 )
 
 // Sample table name.
@@ -32,10 +34,10 @@ type Sample interface {
 }
 
 // Sample repository structure.
-type SampleRepository struct{ psql Postgres }
+type SampleRepository struct{ psql postgres.Postgres }
 
 // Creating a new sample repository.
-func NewSampleRepository(psql Postgres) *SampleRepository {
+func NewSampleRepository(psql postgres.Postgres) *SampleRepository {
 	return &SampleRepository{psql: psql}
 }
 
