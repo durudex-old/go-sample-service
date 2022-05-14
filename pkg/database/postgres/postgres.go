@@ -56,9 +56,9 @@ func (c *PostgresConfig) Configure(cfg *pgxpool.Config) {
 	cfg.MinConns = c.MinConns
 }
 
-// Creating a new postgres client.
-func NewClient(cfg *PostgresConfig) (Postgres, error) {
-	log.Debug().Msg("Creating a new postgres client")
+// Creating a new postgres pool connection.
+func NewPool(cfg *PostgresConfig) (Postgres, error) {
+	log.Debug().Msg("Creating a new postgres pool connection")
 
 	// Parsing database url.
 	config, err := pgxpool.ParseConfig(cfg.URL)

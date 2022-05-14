@@ -31,8 +31,8 @@ type PostgresRepository struct{ Sample }
 func NewPostgresRepository(cfg config.PostgresConfig) *PostgresRepository {
 	log.Debug().Msg("Creating a new postgres repository")
 
-	// Creating a new postgres client.
-	client, err := postgres.NewClient(&postgres.PostgresConfig{
+	// Creating a new postgres pool connection.
+	client, err := postgres.NewPool(&postgres.PostgresConfig{
 		URL:      cfg.URL,
 		MaxConns: cfg.MaxConns,
 		MinConns: cfg.MinConns,
