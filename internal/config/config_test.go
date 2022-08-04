@@ -25,8 +25,8 @@ import (
 	"github.com/durudex/go-sample-service/internal/config"
 )
 
-// Test initialize config.
-func TestConfig_Init(t *testing.T) {
+// Testing creating a new config.
+func TestConfig_NewConfig(t *testing.T) {
 	// Environment configurations.
 	type env struct{ configPath, postgresUrl string }
 
@@ -80,8 +80,8 @@ func TestConfig_Init(t *testing.T) {
 			// Set environments configurations.
 			setEnv(tt.args.env)
 
-			// Initialize connfig.
-			got, err := config.Init()
+			// Creating a new config.
+			got, err := config.NewConfig()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("error initialize config: %s", err.Error())
 			}

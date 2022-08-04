@@ -43,10 +43,10 @@ func init() {
 
 // A function that running the application.
 func main() {
-	// Initialize config.
-	cfg, err := config.Init()
+	// Creating a new config.
+	cfg, err := config.NewConfig()
 	if err != nil {
-		log.Error().Err(err).Msg("error initialize config")
+		log.Error().Err(err).Msg("error creating a new config")
 	}
 
 	// Creating a new repository.
