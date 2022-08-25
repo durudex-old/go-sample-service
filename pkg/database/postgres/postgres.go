@@ -31,10 +31,31 @@ import (
 
 // Postgres driver interface.
 type Postgres interface {
+	// Begin acquires a connection from the Pool and starts a transaction. Unlike database/sql, the
+	// context only affects the begin command. i.e. there is no auto-rollback on context cancellation.
+	// Begin initiates a transaction block without explicitly setting a transaction mode for the block
+	// (see BeginTx with TxOptions if transaction mode is required). *pgxpool.Tx is returned, which
+	// implements the pgx.Tx interface. Commit or Rollback must be called on the returned transaction
+	// to finalize the transaction block.
 	Begin(ctx context.Context) (pgx.Tx, error)
+	// Query acquires a connection and executes a query that returns pgx.Rows. Arguments should be
+	// referenced positionally from the SQL string as $1, $2, etc. See pgx.Rows documentation to
+	// close the returned Rows and return the acquired connection to the Pool.
 	Query(ctx context.Context, sql string, args ...interface{}) (pgx.Rows, error)
+	// QueryRow acquires a connection and executes a query that is expected to return at most one
+	// row (pgx.Row). Errors are deferred until pgx.Row's Scan method is called. If the query selects
+	//  no rows, pgx.Row's Scan will return ErrNoRows. Otherwise, pgx.Row's Scan scans the first
+	// selected row and discards the rest. The acquired connection is returned to the Pool when
+	// pgx.Row's Scan method is called.
 	QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row
+	// Exec acquires a connection from the Pool and executes the given SQL. SQL can be either a
+	// prepared statement name or an SQL string. Arguments should be referenced positionally from
+	// the SQL string as $1, $2, etc. The acquired connection is returned to the pool when the Exec
+	// function returns.
 	Exec(ctx context.Context, sql string, arguments ...interface{}) (pgconn.CommandTag, error)
+	// Close closes all connections in the pool and rejects future Acquire calls. Blocks until all
+	// connections are returned to pool and closed.
+	Close()
 }
 
 // Postgres config structure.

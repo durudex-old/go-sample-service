@@ -25,21 +25,29 @@ import (
 )
 
 // Postgres repository structure.
-type PostgresRepository struct{ Sample }
+type PostgresRepository struct {
+	Sample Sample
+	poll   postgres.Postgres
+}
 
 // Creating a new postgres repository.
 func NewPostgresRepository(cfg config.PostgresConfig) *PostgresRepository {
 	log.Debug().Msg("Creating a new postgres repository")
 
 	// Creating a new postgres pool connection.
-	client, err := postgres.NewPool(&postgres.PostgresConfig{
+	poll, err := postgres.NewPool(&postgres.PostgresConfig{
 		URL:      cfg.URL,
 		MaxConns: cfg.MaxConns,
 		MinConns: cfg.MinConns,
 	})
 	if err != nil {
-		log.Fatal().Err(err).Msg("failed to create postgres client")
+		log.Fatal().Err(err).Msg("failed to create postgres poll connection")
 	}
 
-	return &PostgresRepository{Sample: NewSampleRepository(client)}
+	return &PostgresRepository{Sample: NewSampleRepository(poll)}
+}
+
+// Closing postgres pool connections.
+func (r *PostgresRepository) Close() {
+	r.poll.Close()
 }

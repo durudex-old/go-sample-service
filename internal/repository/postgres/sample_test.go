@@ -31,16 +31,16 @@ import (
 // Testing creating sample element.
 func TestSampleRepository_Create(t *testing.T) {
 	// Creating a new mock connection.
-	mock, err := pgxmock.NewConn()
+	mock, err := pgxmock.NewPool()
 	if err != nil {
 		t.Fatalf("error creating a new mock connection: %s", err.Error())
 	}
-	defer mock.Close(context.Background())
+	defer mock.Close()
 
 	// Testing args.
 	type args struct{ text string }
 
-	// Test bahavior.
+	// Test behavior.
 	type mockBehavior func(args args, id int)
 
 	// Creating a new repository.
@@ -89,16 +89,16 @@ func TestSampleRepository_Create(t *testing.T) {
 // Testing deleting sample element.
 func TestSampleRepository_Delete(t *testing.T) {
 	// Creating a new mock connection.
-	mock, err := pgxmock.NewConn()
+	mock, err := pgxmock.NewPool()
 	if err != nil {
 		t.Fatalf("error creating a new mock connection: %s", err.Error())
 	}
-	defer mock.Close(context.Background())
+	defer mock.Close()
 
 	// Testing args.
 	type args struct{ id int }
 
-	// Test bahavior.
+	// Test behavior.
 	type mockBehavior func(args args)
 
 	// Creating a new repository.

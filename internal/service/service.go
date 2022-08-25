@@ -24,5 +24,5 @@ type Service struct{ Sample }
 
 // Creating a new service.
 func NewService(repos *repository.Repository) *Service {
-	return &Service{Sample: NewSampleService(repos.Postgres)}
+	return &Service{Sample: NewSampleService(repos.Postgres.Sample)}
 }

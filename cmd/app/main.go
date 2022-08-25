@@ -67,8 +67,11 @@ func main() {
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
 	<-quit
 
+	// Closing postgres pool connections.
+	repos.Postgres.Close()
+
 	// Stopping server.
 	srv.Stop()
 
-	log.Info().Msg("Durudex Sample Service stoping!")
+	log.Info().Msg("Durudex Sample Service stopping!")
 }
